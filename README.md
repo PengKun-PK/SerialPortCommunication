@@ -1,5 +1,4 @@
 
-
 # 前言
 
 本文介绍了Windows平台上的串口相关软件开发的具体步骤，其大致分为4步：（1）打开串口 （2）配置串口（3）串口通讯（4）关闭串口。接下来，会用C++代码示例来详细介绍具体的开发流程。
@@ -74,25 +73,25 @@ _In_opt_ HANDLE hTemplateFile
 ### 1.2.2 打开串口（同步通信）
 ```cpp
 HANDLE m_hCom;
-m_hCom = CreateFile("COM1",                     //串口名，COM10及以上的串口名格式应为："\\\\.\\COM10"
-					GENERIC_READ|GENERIC_WRITE, //允许读或写
-					0,							//独占方式
-					NULL,
-					OPEN_EXISTING,				//打开而不是创建
-					NULL,						//同步方式
-					NULL );
+m_hCom = CreateFile("COM1",                 //串口名，COM10及以上的串口名格式应为："\\\\.\\COM10"
+		GENERIC_READ|GENERIC_WRITE, //允许读或写
+		0,			    //独占方式
+		NULL,
+		OPEN_EXISTING,		    //打开而不是创建
+		NULL,			    //同步方式
+		NULL );
 ```
 
 ### 1.2.3 打开串口（异步通信）
 ```cpp
 HANDLE m_hCom;
-m_hCom = CreateFile("\\\\.\\COM11",             //串口名，COM10及以上的串口名格式应为："\\\\.\\COM10"
-					GENERIC_READ|GENERIC_WRITE, //允许读或写
-					0,							//独占方式
-					NULL,
-					OPEN_EXISTING,				//打开而不是创建
-					FILE_FLAG_OVERLAPPED,		//异步方式
-					NULL );
+m_hCom = CreateFile("\\\\.\\COM11",         //串口名，COM10及以上的串口名格式应为："\\\\.\\COM10"
+		GENERIC_READ|GENERIC_WRITE, //允许读或写
+		0,			    //独占方式
+		NULL,
+		OPEN_EXISTING,		    //打开而不是创建
+		FILE_FLAG_OVERLAPPED,	    //异步方式
+		NULL );
 ```
 # 2. 关闭串口
 调用CloseHandle()函数来关闭串口，函数参数为串口句柄。
@@ -160,17 +159,17 @@ GetCommState(m_hCom, &dcb); // m_hCom是串口句柄
 
 ```cpp
 dcb.BaudRate = 115200; 		// 波特率
-dcb.ByteSize = 8; 	   		// 8位数据位
+dcb.ByteSize = 8; 	        // 8位数据位
 dcb.StopBits = ONESTOPBIT;	// 1位停止位
-							// | ONESTOPBIT | 1位停止位 |
-							// | ONE5STOPBITS | 1.5位停止位 |
-							// | TWOSTOPBITS | 2位停止位 |
-dcb.Parity = NOPARITY; 	    // 无校验 
-							// | EVENPARITY | 偶校验 |
-							// | MARKPARITY | 标号校验 |
-							// | NOPARITY | 无校验 |
-							// | ODDPARITY | 奇校验 |
-							// | SPACEPARITY | 空格校验 |
+				// | ONESTOPBIT | 1位停止位 |
+				// | ONE5STOPBITS | 1.5位停止位 |
+				// | TWOSTOPBITS | 2位停止位 |
+dcb.Parity = NOPARITY; 	        // 无校验 
+				// | EVENPARITY | 偶校验 |
+				// | MARKPARITY | 标号校验 |
+				// | NOPARITY | 无校验 |
+				// | ODDPARITY | 奇校验 |
+				// | SPACEPARITY | 空格校验 |
 ```
 其中：
 
@@ -201,20 +200,20 @@ if (!ClearCommError(g_hCom, &dwError, NULL))
 
 ```cpp
 BOOL ReadFile(
-  HANDLE       hFile,					// 串口句柄
-  LPVOID       lpBuffer,				// 读缓冲区
+  HANDLE       hFile,			// 串口句柄
+  LPVOID       lpBuffer,		// 读缓冲区
   DWORD        nNumberOfBytesToRead,	// 要求读入的字节数
-  LPDWORD      lpNumberOfBytesRead,		// 实际读入的字节数
-  LPOVERLAPPED lpOverlapped				// 重叠结构
+  LPDWORD      lpNumberOfBytesRead,	// 实际读入的字节数
+  LPOVERLAPPED lpOverlapped		// 重叠结构
 ); 
 ```
 ```cpp
 BOOL WriteFile(
-  HANDLE  hFile,						//文件句柄
-  LPCVOID lpBuffer,						//数据缓存区指针
-  DWORD   nNumberOfBytesToWrite,		//你要写的字节数
-  LPDWORD lpNumberOfBytesWritten,		//用于保存实际写入字节数的存储区域的指针
-  LPOVERLAPPED lpOverlapped				//OVERLAPPED结构体指针
+  HANDLE  hFile,			//文件句柄
+  LPCVOID lpBuffer,			//数据缓存区指针
+  DWORD   nNumberOfBytesToWrite,	//你要写的字节数
+  LPDWORD lpNumberOfBytesWritten,	//用于保存实际写入字节数的存储区域的指针
+  LPOVERLAPPED lpOverlapped		//OVERLAPPED结构体指针
 ) ;
 ```
 
@@ -549,5 +548,6 @@ BOOL WaitCommEvent(
 # 7. API串口通讯代码示例
 接下来我们提供了一个完整的API串口通讯的控制台程序示例。
 [https://download.csdn.net/download/WCH_TechGroup/12228991](https://download.csdn.net/download/WCH_TechGroup/12228991)
+
 也可在github上下载我们的示例程序。
 [https://github.com/PengKun-PK/SerialPortCommunication](https://github.com/PengKun-PK/SerialPortCommunication)
